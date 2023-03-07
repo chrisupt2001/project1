@@ -95,6 +95,47 @@ const Ascend = () => {
     setcurrencyRates2(currencyDescend2); 
   }
 
+  const apiManCall = () => {
+
+    console.log('useEffect called')
+    axios.get(conversions)
+    .then(res => {
+        const temp = [];
+        const temp2 = [];
+        const convertData = res.data;
+
+const USD = {code: "USD", number: convertData.bpi.USD.rate_float};
+const EUR = {code: "EUR", number: convertData.bpi.EUR.rate_float};
+const GBP = {code: "GBP", number: convertData.bpi.GBP.rate_float};
+
+const btcToUsd = {code: "USD", number: 1/convertData.bpi.USD.rate_float};
+const btcToEur = {code: "EUR", number: 1/convertData.bpi.EUR.rate_float};
+const btcToGbp = {code: "GBP", number: 1/convertData.bpi.GBP.rate_float};
+
+        console.log(convertData)
+        setApiCall({...convertData});
+        setUSDRate(convertData.bpi.USD.rate_float)
+        setEURRate(convertData.bpi.EUR.rate_float)
+        setGBPRate(convertData.bpi.GBP.rate_float)
+        setTimeUpdate(convertData.time.updated)
+        
+        temp.push(USD);
+        temp.push(EUR);
+        temp.push(GBP);
+        
+        setcurrencyRates(temp);
+
+        temp2.push(btcToUsd);
+        temp2.push(btcToEur);
+        temp2.push(btcToGbp);
+
+        setcurrencyRates2(temp2);
+        
+        console.log(currencyRates);
+})
+
+  }
+
 
 
 const handleClick = () => {
@@ -138,6 +179,7 @@ return(
         <>
 
         <button onClick={handleClick} type="button" >Ascend/Descend</button>
+        <button onClick={apiManCall} type="button" >Refresh</button>
 
         <br />
 
