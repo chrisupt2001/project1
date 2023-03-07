@@ -13,6 +13,8 @@ const Header = () =>
     })
 
     const [currencyRates, setcurrencyRates] = useState([])
+    const [currencyRates2, setcurrencyRates2] = useState([])
+    
 
     const [USDRate, setUSDRate] = useState(0.0)
     const [EURRate, setEURRate] = useState(0.0)
@@ -25,6 +27,8 @@ useEffect (() => {
     console.log('useEffect called')
     axios.get(conversions)
     .then(res => {
+        const temp = [];
+        const temp2 = [];
         const convertData = res.data;
         console.log(convertData.bpi)
         setApiCall({...convertData.bpi});
@@ -32,11 +36,19 @@ useEffect (() => {
         setEURRate(convertData.bpi.EUR.rate_float)
         setGBPRate(convertData.bpi.GBP.rate_float)
         
-        currencyRates.push(convertData.bpi.USD.rate_float);
-        currencyRates.push(convertData.bpi.EUR.rate_float);
-        currencyRates.push(convertData.bpi.GBP.rate_float);
-        console.log(currencyRates);
+        temp.push(convertData.bpi.USD.rate_float);
+        temp.push(convertData.bpi.EUR.rate_float);
+        temp.push(convertData.bpi.GBP.rate_float);
+        
+        setcurrencyRates(temp);
 
+        temp2.push(1/convertData.bpi.USD.rate_float);
+        temp2.push(1/convertData.bpi.EUR.rate_float);
+        temp2.push(1/convertData.bpi.GBP.rate_float);
+
+        setcurrencyRates2(temp2);
+        
+        console.log(currencyRates);
 })}, []);
 
 
@@ -49,6 +61,12 @@ const Ascend = () => {
 
   setcurrencyRates(currencyAscend);
 
+  const currencyAscend2 = [...currencyRates2];
+
+  currencyAscend2.sort((currencyRate1, currencyRate2) => currencyRate1 - currencyRate2);
+
+  setcurrencyRates2(currencyAscend2);
+
 }
 
   const Descend = () => {
@@ -57,7 +75,13 @@ const Ascend = () => {
 
     currencyDescend.sort((currencyRate1, currencyRate2) => currencyRate2 - currencyRate1);
   
-    setcurrencyRates(currencyDescend);  
+    setcurrencyRates(currencyDescend); 
+    
+    const currencyDescend2 = [...currencyRates2];
+
+    currencyDescend2.sort((currencyRate1, currencyRate2) => currencyRate2 - currencyRate1);
+  
+    setcurrencyRates2(currencyDescend2); 
   }
 
 
@@ -77,9 +101,20 @@ const handleClick = () => {
 }
 
 const results = [];
+const results2 = [];
+
 
 currencyRates.forEach((rate, index) => {
   results.push(
+    <div key={index}>
+      <h2>{rate}</h2>
+      <hr />
+    </div>,
+  );
+});
+
+currencyRates2.forEach((rate, index) => {
+  results2.push(
     <div key={index}>
       <h2>{rate}</h2>
       <hr />
@@ -94,9 +129,8 @@ return(
         <button onClick={handleClick} type="button" >Ascend/Descend</button>
         <h1>BTC to USD, EUR, and GBP</h1>
         <ul>
-  <li>{USDRate}</li>
-  <li>{EURRate}</li>
-  <li>{GBPRate}</li>
+  <li>{results}</li>
+  
 </ul>
 
 <br/><br/><br/>
@@ -104,9 +138,7 @@ return(
 <h1>USD, EUR, and GBP to BTC </h1>
 
 <ul>
-<li>{1/USDRate}</li>
-  <li>{1/EURRate}</li>
-  <li>{1/GBPRate}</li>
+<li>{results2}</li>
   </ul>
 </>
     )
