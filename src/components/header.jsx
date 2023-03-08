@@ -32,6 +32,12 @@ useEffect (() => {
         const temp2 = [];
         const convertData = res.data;
 
+        var localTZ = new Date(convertData.time.updatedISO);
+
+        console.log(localTZ.toString());
+
+
+
 const USD = {code: "USD", number: convertData.bpi.USD.rate_float};
 const EUR = {code: "EUR", number: convertData.bpi.EUR.rate_float};
 const GBP = {code: "GBP", number: convertData.bpi.GBP.rate_float};
@@ -45,7 +51,7 @@ const btcToGbp = {code: "GBP", number: 1/convertData.bpi.GBP.rate_float};
         setUSDRate(convertData.bpi.USD.rate_float)
         setEURRate(convertData.bpi.EUR.rate_float)
         setGBPRate(convertData.bpi.GBP.rate_float)
-        setTimeUpdate(convertData.time.updated)
+        setTimeUpdate(localTZ.toString())
         
         temp.push(USD);
         temp.push(EUR);
