@@ -33,10 +33,21 @@ useEffect (() => {
         const convertData = res.data;
 
         var localTZ = new Date(convertData.time.updatedISO);
+        
+        // var hr = localTZ.getHours();
+        // var min = localTZ.getMinutes();
+        // var day = localTZ.getDate();
+        // var month = localTZ.getMonth();
+        // var yr = localTZ.getFullYear();
+        // var ampm = hr >= 12 ? 'pm' : 'am';
+        // hr = hr % 12;
+        // hr = hr ? hr : 12; // hour '0' should be '12' not 0
+        // min = min < 10 ? '0'+min : min;
+        // var ltz = day + " " + month + " " + yr + " " + hr + ':' + min + ' ' + ampm;
+              
+        
 
         console.log(localTZ.toString());
-
-
 
 const USD = {code: "USD", number: convertData.bpi.USD.rate_float};
 const EUR = {code: "EUR", number: convertData.bpi.EUR.rate_float};
@@ -51,7 +62,7 @@ const btcToGbp = {code: "GBP", number: 1/convertData.bpi.GBP.rate_float};
         setUSDRate(convertData.bpi.USD.rate_float)
         setEURRate(convertData.bpi.EUR.rate_float)
         setGBPRate(convertData.bpi.GBP.rate_float)
-        setTimeUpdate(localTZ.toString())
+        setTimeUpdate(localTZ.toLocaleString())
         
         temp.push(USD);
         temp.push(EUR);
@@ -110,6 +121,8 @@ const Ascend = () => {
         const temp2 = [];
         const convertData = res.data;
 
+        var localTZ = new Date(convertData.time.updatedISO);
+
 const USD = {code: "USD", number: convertData.bpi.USD.rate_float};
 const EUR = {code: "EUR", number: convertData.bpi.EUR.rate_float};
 const GBP = {code: "GBP", number: convertData.bpi.GBP.rate_float};
@@ -123,7 +136,7 @@ const btcToGbp = {code: "GBP", number: 1/convertData.bpi.GBP.rate_float};
         setUSDRate(convertData.bpi.USD.rate_float)
         setEURRate(convertData.bpi.EUR.rate_float)
         setGBPRate(convertData.bpi.GBP.rate_float)
-        setTimeUpdate(convertData.time.updated)
+        setTimeUpdate(localTZ.toLocaleString())
         
         temp.push(USD);
         temp.push(EUR);
