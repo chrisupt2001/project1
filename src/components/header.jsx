@@ -21,6 +21,9 @@ const Header = () =>
     const [GBPRate, setGBPRate] = useState(0.0)
     const [timeUpdate, setTimeUpdate] = useState(" ")
     const [AnD, setAnD] = useState(false);
+    const [selectDropDwn, setSelectDropDwn] = useState("USD")
+    const [inputVal, setInputVal] = useState(0.0)
+    const [inputRes, setInputRes] = useState()
 
 
 useEffect (() => {
@@ -193,6 +196,30 @@ currencyRates2.forEach((rate, index) => {
   );
 });
 
+const selectCurrency = (e) => {
+  setSelectDropDwn(e.target.value)
+}
+
+const inputCurrency =(e) => {
+  setInputVal(e.target.value)
+}
+
+const Convert = () => {
+    
+  if (selectDropDwn == "USD")
+  {
+      setInputRes(inputVal * (1/USDRate))
+  }
+  if (selectDropDwn == "EUR")
+  {
+    setInputRes(inputVal * (1/EURDRate))
+  }
+  if (selectDropDwn == "GBP")
+  {
+    setInputRes(inputVal * (1/GBPRate))
+  }
+
+}
 
 return(
         <>
@@ -211,13 +238,31 @@ return(
   
 </ul>
 
-<br/><br/><br/>
-
 <h1>USD, EUR, and GBP to BTC</h1>
 
 <ul className="BTC">
 <li>{results2}</li>
   </ul>
+
+  <h1>CONVERSION CALCULATOR:</h1>
+
+  <label for="Currencies">Currency of Choice:</label>
+  <select onChange={selectCurrency} name="Currency" id="Currencies">
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
+  <br/><br/>
+
+<label for="fname">Currency Amount: </label>
+<input onChange={inputCurrency} type="number" id="input$" name="fname"/><br/><br/>
+<input onClick={Convert} type="submit" value="CALCULATE"/>
+
+<br/><br/>
+
+<h3>Calculated Conversion: {inputRes}</h3>
+
+<br/><br/><br/>
 </>
     )
 

@@ -16,12 +16,27 @@ ul {
     text-decoration: none;
   }
 
+  /*DESKTOP*/
+
   .Currency {
       width: 8%;
   }
 
   .BTC{
     width: 16%;
+  }
+
+  /*PHONES*/
+  @media only screen and (max-width: 768px) {
+
+    .Currency {
+      width: 40%;
+  }
+
+  .BTC{
+    width: 80%;
+  }
+
   }
 
   html{
