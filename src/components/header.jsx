@@ -78,7 +78,7 @@ const Header = () => {
 
 			console.log(currencyRates);
 		});
-	}, []);
+	});
 
 	const Ascend = () => {
 		const currencyAscend = [...currencyRates];
