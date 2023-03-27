@@ -73,6 +73,7 @@ const Header = () => {
 
 			//setting state varibles
 			console.log(convertData);
+			console.log(apiCall);
 			setApiCall({ ...convertData });
 			setUSDRate(convertData.bpi.USD.rate_float);
 			setEURRate(convertData.bpi.EUR.rate_float);
@@ -160,6 +161,7 @@ const Header = () => {
 			};
 
 			console.log(convertData);
+			console.log(apiCall);
 			setApiCall({ ...convertData });
 			setUSDRate(convertData.bpi.USD.rate_float);
 			setEURRate(convertData.bpi.EUR.rate_float);
@@ -261,7 +263,7 @@ const Header = () => {
 
 			<h1>CONVERSION CALCULATOR:</h1>
 
-			<label for="Currencies">Currency of Choice:</label>
+			<label htmlFor="Currencies">Currency of Choice:</label>
 			<select onChange={selectCurrency} name="Currency" id="Currencies">
 				<option value="USD">USD</option>
 				<option value="EUR">EUR</option>
@@ -270,7 +272,7 @@ const Header = () => {
 			<br />
 			<br />
 
-			<label for="fname">Currency Amount: </label>
+			<label htmlFor="fname">Currency Amount: </label>
 			<input onChange={inputCurrency} type="number" id="input$" name="fname" />
 			<br />
 			<br />
