@@ -1,20 +1,31 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+//api to call
 const conversions = 'https://api.coindesk.com/v1/bpi/currentprice.json';
 
 const Header = () => {
+	//state variables apicall
 	const [apiCall, setApiCall] = useState({});
 
+	//state variables/array for currency rates display
 	const [currencyRates, setcurrencyRates] = useState([]);
 	const [currencyRates2, setcurrencyRates2] = useState([]);
 
+	//state variables for rates of btc to USD, EUR, GBP
 	const [USDRate, setUSDRate] = useState(0.0);
 	const [EURRate, setEURRate] = useState(0.0);
 	const [GBPRate, setGBPRate] = useState(0.0);
+
+	//state variable for time update for rates
 	const [timeUpdate, setTimeUpdate] = useState(' ');
+
+	//state variables for ascending/descending,
+	//and to detect which choice is chosen for converter
 	const [AnD, setAnD] = useState(false);
 	const [selectDropDwn, setSelectDropDwn] = useState('USD');
+
+	//state variables for the input value and resulting value
 	const [inputVal, setInputVal] = useState(0.0);
 	const [inputRes, setInputRes] = useState();
 
@@ -25,6 +36,7 @@ const Header = () => {
 			const temp2 = [];
 			const convertData = res.data;
 
+			//call function to get current date and time depending on browser time zone
 			var localTZ = new Date(convertData.time.updatedISO);
 
 			// var hr = localTZ.getHours();
@@ -40,10 +52,12 @@ const Header = () => {
 
 			console.log(localTZ.toString());
 
+			//objects for each coversion rate
 			const USD = { code: 'USD', number: convertData.bpi.USD.rate_float };
 			const EUR = { code: 'EUR', number: convertData.bpi.EUR.rate_float };
 			const GBP = { code: 'GBP', number: convertData.bpi.GBP.rate_float };
 
+			//converting from currency of chocie to btc
 			const btcToUsd = {
 				code: 'USD',
 				number: 1 / convertData.bpi.USD.rate_float,
@@ -57,6 +71,7 @@ const Header = () => {
 				number: 1 / convertData.bpi.GBP.rate_float,
 			};
 
+			//setting state varibles
 			console.log(convertData);
 			setApiCall({ ...convertData });
 			setUSDRate(convertData.bpi.USD.rate_float);
@@ -80,6 +95,7 @@ const Header = () => {
 		});
 	});
 
+	//ascending function
 	const Ascend = () => {
 		const currencyAscend = [...currencyRates];
 
@@ -98,6 +114,7 @@ const Header = () => {
 		setcurrencyRates2(currencyAscend2);
 	};
 
+	//decsending function
 	const Descend = () => {
 		const currencyDescend = [...currencyRates];
 
