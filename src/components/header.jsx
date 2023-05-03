@@ -94,7 +94,7 @@ const Header = () => {
 
 			console.log(currencyRates);
 		});
-	});
+	}, []);
 
 	//ascending function
 	const Ascend = () => {
@@ -238,7 +238,7 @@ const Header = () => {
 	};
 
 	return (
-		<>
+		<div data-testid="render">
 			<button onClick={handleClick} type="button">
 				Ascend/Descend
 			</button>
@@ -286,7 +286,7 @@ const Header = () => {
 			<br />
 			<br />
 			<br />
-		</>
+		</div>
 	);
 };
 
